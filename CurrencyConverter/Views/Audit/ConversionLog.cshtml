@@ -1,0 +1,54 @@
+﻿@model CurrencyConverter.Models.Audit.ConversionLogViewModel
+
+<h2 class="display-4 m-5 text-center">Audit Logs</h2>
+
+<div class="card border-light">
+    <div class="card-body">
+        <form method="get" asp-controller="@nameof(Audit)" asp-action="@nameof(Audit.ConversionLog)">
+
+            <div class="form-row  align-items-end">
+                <div class="form-group col-auto my-1">
+                    <label class="mr-sm-2" asp-for="Start"></label>
+                    <input class="form-control" asp-for="Start" />
+                </div>
+                <div class="form-group col-auto my-1">
+                    <label class="mr-sm-2" asp-for="End"></label>
+                    <input class="form-control" asp-for="End" />
+                </div>
+                <button type="submit" class="btn btn-primary my-1">Search</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<br />
+@if (!Model.ConversionLogs.Any())
+{
+    <p>There are no logs</p>
+}
+else
+{
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Date Converted</th>
+                <th scope="col">From Amount</th>
+                <th scope="col">To Amount</th>
+                <th scope="col">Rate</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var log in Model.ConversionLogs)
+            {
+            <tr>
+                <th scope="row">@log.Id</th>
+                <td>@log.Created</td>
+                <td>@log.FromAmount.ToString("n2") @log.FromCode</td>
+                <td>@log.ToAmount.ToString("n2") @log.ToCode</td>
+                <td>@log.Rate.ToString("n4")</td>
+            </tr>
+            }
+        </tbody>
+    </table>
+}

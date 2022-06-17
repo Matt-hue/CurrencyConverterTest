@@ -1,0 +1,40 @@
+﻿@model IndexViewModel
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<h2 class="display-4 m-5 text-center">Currency Convertor</h2>
+
+<div class="card border-info">
+    <div class="card-body text-center">
+        <form method="post" asp-controller="@nameof(Home)" asp-action="@nameof(Home.ConvertCurrency)">
+
+            <div class="form-row  align-items-end">
+                <div class="form-group col-auto my-1">
+                    <label class="mr-sm-2" asp-for="FromAmount"></label>
+                    <input class="form-control" asp-for="FromAmount" />
+                </div>
+                <div class="form-group col-auto my-1">
+                    <label class="mr-sm-2" asp-for="FromCode"></label>
+                    <select class="custom-select mr-sm-2" asp-for="FromCode" asp-items="Html.GetEnumSelectList<CurrencyCode>()">
+                        @*<option selected="selected" value="">Please select</option>*@
+                    </select>
+                </div>
+                <div class="form-group col-auto my-1">
+                    <label class="mr-sm-2" asp-for="ToCode"></label>
+                    <select class="custom-select mr-sm-2" asp-for="ToCode" asp-items="Html.GetEnumSelectList<CurrencyCode>()">
+                        @*<option selected="selected" value="">Please select</option>*@
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary my-1">Convert</button>
+            </div>
+        </form>
+    </div>
+    <div class="card-footer">
+        @if (Model != null && Model?.ToAmount > 0)
+        {
+            <p> Converted Amount:</p>
+            <p class="pl-3"><b> @Model?.ToAmount.ToString("n2") @Model?.ToCode</b></p>
+        }
+    </div>
+</div>
